@@ -1,0 +1,32 @@
+create proc SpSearchByProductName
+(@text nvarchar(50),@criteria int)
+as
+begin
+  if(@criteria=0)
+  begin
+    select ProductID,ProductName,UnitPrice,UnitsInStock from Products where ProductName like '%'+@text+'%'
+  end
+  else if(@criteria=1)
+  begin
+    select ProductID,ProductName,UnitPrice,UnitsInStock from Products where ProductName like ''+@text+'%'
+  end
+  else 
+  begin
+	select ProductID,ProductName,UnitPrice,UnitsInStock from Products where ProductName like '%'+@text+''
+  end
+end
+
+create proc SpSearchByPrice(@minPrice decimal,@maxPrice decimal)
+as
+begin
+  select ProductID,ProductName,UnitPrice,UnitsInStock from Products where UnitPrice between @minPrice and @maxPrice
+end
+
+
+create proc SpSearchByStock(@minStock smallint,@maxStock smallint)
+as
+begin
+  select ProductID,ProductName,UnitPrice,UnitsInStock from Products where UnitsInStock between @minStock and @maxStock
+end
+
+
